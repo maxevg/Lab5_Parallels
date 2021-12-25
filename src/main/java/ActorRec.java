@@ -1,4 +1,5 @@
 import akka.actor.AbstractActor;
+import akka.actor.ActorRef;
 import akka.japi.pf.ReceiveBuilder;
 
 import java.util.HashMap;
@@ -9,6 +10,9 @@ public class ActorRec extends AbstractActor {
     public Receive createReceive() {
         return ReceiveBuilder
                 .create()
-                .match(GetMessage.class)
+                .match(GetMessage.class, msg -> {
+                    getSender().tell(storage.getOrDefault(msg.getUrl(), -1), ActorRef.noSender());
+                })
+                .match(StorageMessage.class)
     }
 }

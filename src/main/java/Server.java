@@ -8,6 +8,7 @@ import akka.http.javadsl.ServerBinding;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.model.Query;
+import akka.japi.Pair;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
@@ -44,6 +45,9 @@ public class Server {
                     int count = Integer.parseInt(q.get(COUNT).get());
                     System.out.println(url + " " + count);
                     return new Pair<String, Integer>(url, count);
+                })
+                .mapAsync(MAP_ASYNC, req -> {
+                    
                 })
     }
 

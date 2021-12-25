@@ -41,6 +41,7 @@ public class Server {
                 .map((req) -> {
                     Query q = req.getUri().query();
                     String url = q.get(TEST_URL).get();
+                    int count = Integer.parseInt(q.get(COUNT).get());
                 })
     }
 

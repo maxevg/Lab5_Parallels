@@ -13,6 +13,9 @@ public class ActorRec extends AbstractActor {
                 .match(GetMessage.class, msg -> {
                     getSender().tell(storage.getOrDefault(msg.getUrl(), -1), ActorRef.noSender());
                 })
-                .match(StorageMessage.class)
+                .match(StorageMessage.class, msg -> {
+                    storage.putIfAbsent(msg.getUrl(), msg.getTime());
+                })
+                .build();
     }
 }

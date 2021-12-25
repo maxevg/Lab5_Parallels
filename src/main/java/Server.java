@@ -1,4 +1,6 @@
+import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
+import akka.actor.Props;
 
 import java.io.IOException;
 
@@ -13,7 +15,8 @@ public class Server {
     public static void main(String[] args) throws IOException {
         System.out.println("Start!");
         ActorSystem system = ActorSystem.create("routes");
-        
+        ActorRef actor = system.actorOf(Props.create(ActorRec.class));
+
     }
 
 }

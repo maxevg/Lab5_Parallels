@@ -15,6 +15,7 @@ import akka.stream.javadsl.Flow;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 public class Server {
@@ -54,6 +55,7 @@ public class Server {
                         if ((Integer) res >= 0) {
                             return CompletableFuture.completedFuture(new Pair<>(req.first(), (Integer) res));
                         }
+                        
                     })
                 })
     }

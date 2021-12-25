@@ -9,10 +9,12 @@ import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.model.Query;
 import akka.japi.Pair;
+import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.concurrent.CompletionStage;
 
 public class Server {
@@ -47,7 +49,12 @@ public class Server {
                     return new Pair<String, Integer>(url, count);
                 })
                 .mapAsync(MAP_ASYNC, req -> {
-                    
+                    CompletionStage<Object> stage = Patterns.ask(actor, new GetMessage(req.first()), Duration.ofSeconds(TIME_OUT_MILLIS));
+                    return stage.thenCompose(res -> {
+                        if ((Integer) res >= 0) {
+                            return CompletableFuture.completedFuture(new Pair<>(req.first(), (Integer) res));
+                        }
+                    })
                 })
     }
 

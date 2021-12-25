@@ -75,6 +75,8 @@ public class Server {
                                 .single(req)
                                 .via(flow)
                                 .toMat(Sink.fold((int) 0, Integer::sum), Keep.right())
+                                .run(materializer)
+                                .thenApply(sum -> new Pair<>(req.first(),  (sum / req.second())));
                     })
                 })
     }

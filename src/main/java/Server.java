@@ -77,7 +77,10 @@ public class Server {
                                 .toMat(Sink.fold((int) 0, Integer::sum), Keep.right())
                                 .run(materializer)
                                 .thenApply(sum -> new Pair<>(req.first(),  (sum / req.second())));
-                    })
+                    });
+                })
+                .map(req -> {
+                    actor.tell(new StorageMessage(req.first(), req.second()), ActorRef.noSender());
                 })
     }
 

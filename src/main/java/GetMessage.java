@@ -1,2 +1,7 @@
-package PACKAGE_NAME;public class GetMessage {
+public class GetMessage {
+    private String url;
+
+    public GetMessage(String url) {
+        this.url = url;
+    }
 }

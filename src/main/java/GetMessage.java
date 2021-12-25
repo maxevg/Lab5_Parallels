@@ -4,4 +4,8 @@ public class GetMessage {
     public GetMessage(String url) {
         this.url = url;
     }
+
+    public String getUrl() {
+        return this.url;
+    }
 }

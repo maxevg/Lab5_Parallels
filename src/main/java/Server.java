@@ -15,6 +15,8 @@ import akka.stream.javadsl.Flow;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
@@ -56,7 +58,12 @@ public class Server {
                             return CompletableFuture.completedFuture(new Pair<>(req.first(), (Integer) res));
                         }
                         Flow<Pair<String, Integer>, Integer, NotUsed> flow =
-                                
+                                Flow.<Pair<String, Integer>>create()
+                                        .mapConcat(pair -> new ArrayList<>(Collections.nCopies(pair.second(), pair.first())))
+                                        .mapAsync(req.second(), url -> {
+                                            long start = System.currentTimeMillis();
+
+                                        })
                     })
                 })
     }

@@ -9,7 +9,8 @@ public class Server {
     private static final Integer TIME_OUT_MILLIS = 5000;
 
     public static void main(String[] args) throws IOException {
-        
+        System.out.println("Start!");
+        ActorSystem system = ActorSystem.create("routes");
     }
 
 }
